@@ -3,6 +3,7 @@ package com.android.imdbmovieapp.list;
 import com.android.imdbmovieapp.BasePresenter;
 import com.android.imdbmovieapp.list.models.MovieListResponse;
 import com.android.imdbmovieapp.service.MovieService;
+import com.android.imdbmovieapp.utils.Constant;
 
 import rx.Observer;
 
@@ -12,7 +13,6 @@ import rx.Observer;
  */
 public class MovieListPresenter extends BasePresenter implements MovieListContract.Presenter, Observer<MovieListResponse> {
 
-    private static final String apiKey = "07f045b8b06f4e63d1442f147ec919d0";
     private MovieListContract.View view;
     private MovieService service;
 
@@ -24,7 +24,7 @@ public class MovieListPresenter extends BasePresenter implements MovieListContra
     @Override
     public void fetchMovies() {
         unSubscribeAll();
-        subscribe(service.getPopularMovies(apiKey), MovieListPresenter.this);
+        subscribe(service.getPopularMovies(Constant.API_KEY), MovieListPresenter.this);
         view.showLoadingUi();
     }
 

@@ -3,6 +3,7 @@ package com.android.imdbmovieapp.list;
 import com.android.imdbmovieapp.list.models.MovieListItem;
 import com.android.imdbmovieapp.list.models.MovieListResponse;
 import com.android.imdbmovieapp.service.MovieService;
+import com.android.imdbmovieapp.utils.Constant;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -44,7 +45,7 @@ public class MovieListPresenterTest {
 
   @Test
   public void testFetchMovies_shouldMoveViewToLoadingState() throws Exception {
-    when(service.getPopularMovies()).thenReturn(Observable.just(new MovieListResponse()));
+    when(service.getPopularMovies(Constant.API_KEY)).thenReturn(Observable.just(new MovieListResponse()));
     movieListPresenter.fetchMovies();
 
     verify(view).showLoadingUi();
@@ -61,7 +62,7 @@ public class MovieListPresenterTest {
     items.add(item2);
     movieListResponse.setResults(items);
 
-    when(service.getPopularMovies()).thenReturn(Observable.just(movieListResponse));
+    when(service.getPopularMovies(Constant.API_KEY)).thenReturn(Observable.just(movieListResponse));
 
     movieListPresenter.fetchMovies();
 
@@ -74,7 +75,7 @@ public class MovieListPresenterTest {
   public void testFetchMovies_shouldSendErrorToTheView() {
     Throwable error = new RuntimeException();
     Observable<MovieListResponse> movieListResponseObservable = Observable.error(error);
-    when(service.getPopularMovies()).thenReturn(movieListResponseObservable);
+    when(service.getPopularMovies(Constant.API_KEY)).thenReturn(movieListResponseObservable);
 
     movieListPresenter.fetchMovies();
 
